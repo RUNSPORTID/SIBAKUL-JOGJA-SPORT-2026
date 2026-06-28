@@ -1,0 +1,91 @@
+
+<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RaceHub - Pilih Kategori</title>
+<style>
+body{margin:0;background:#eef3f8;font-family:Arial,sans-serif}
+.wrap{max-width:900px;margin:auto;padding:18px}
+.logo{font-size:42px;font-weight:900}.logo span{color:#1697ff}
+.card{background:#fff;border-radius:18px;padding:20px;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.steps{display:flex;justify-content:space-between;margin:20px 0}
+.step{text-align:center;flex:1}.on{color:#1697ff;font-weight:bold}
+.banner{width:100%;border-radius:18px}
+.ticket{background:#fff;border-radius:16px;padding:18px;margin:18px 0;border:1px solid #e2e8f0}
+.row{display:flex;justify-content:space-between;align-items:center}
+.badge{background:#d8f7df;color:#0a9440;padding:6px 12px;border-radius:20px;font-weight:bold}
+.price{font-size:30px;font-weight:bold;margin:12px 0}
+.select,.ctr button,.next{background:#1697ff;color:#fff;border:none;border-radius:10px;padding:12px 18px;cursor:pointer}
+.ctr{display:none;gap:10px;align-items:center}.ctr button{width:42px;height:42px;padding:0}.sum{background:#fff;border-radius:16px;padding:18px}
+</style>
+<style>
+.stickybar{position:fixed;left:0;right:0;bottom:0;background:#fff;padding:12px 16px;
+box-shadow:0 -4px 15px rgba(0,0,0,.12);display:flex;justify-content:center;z-index:999}
+.stickybtn{width:min(900px,100%);background:#1697ff;color:#fff;border:none;
+padding:16px;border-radius:14px;font-size:18px;font-weight:bold;cursor:pointer}
+body{padding-bottom:90px!important}
+</style>
+
+<style>
+.summarybar{position:fixed;left:0;right:0;bottom:72px;background:#ffffffee;
+backdrop-filter:blur(6px);padding:10px 16px;box-shadow:0 -2px 10px rgba(0,0,0,.08);
+display:flex;justify-content:space-between;z-index:998;font-weight:bold}
+.badge{letter-spacing:.3px}
+.ticket:hover{border-color:#1697ff}
+</style>
+</head><body>
+<div class="wrap">
+<div class="card">
+<div class="logo"><span>RACE</span>HUB</div>
+<div class="steps"><div class="step on">①<br>Pilih Kategori</div><div class="step">②<br>Detail</div><div class="step">③<br>Bayar</div></div>
+<img src="banner_used.png" class="banner">
+<h2>Kategori Tiket</h2>
+<div class='ticket' data-p='400000'><div class='row'><b>21K EARLY BIRD</b><span class='badge'>ON SALE</span></div>
+<div class='price'>Rp 400.000</div>
+<button class='select'>Pilih Tiket</button>
+<div class='ctr'><button class='m'>-</button><span class='q'>1</span><button class='a'>+</button></div></div><div class='ticket' data-p='225000'><div class='row'><b>10K EARLY BIRD</b><span class='badge'>ON SALE</span></div>
+<div class='price'>Rp 225.000</div>
+<button class='select'>Pilih Tiket</button>
+<div class='ctr'><button class='m'>-</button><span class='q'>1</span><button class='a'>+</button></div></div><div class='ticket' data-p='185000'><div class='row'><b>5K EARLY BIRD</b><span class='badge'>ON SALE</span></div>
+<div class='price'>Rp 185.000</div>
+<button class='select'>Pilih Tiket</button>
+<div class='ctr'><button class='m'>-</button><span class='q'>1</span><button class='a'>+</button></div></div>
+<div class='sum'><h3>Grand Total: <span id='t'>Rp 0</span></h3><button class='next' disabled>Lanjut</button></div>
+</div></div>
+<script>
+const f=n=>"Rp "+n.toLocaleString('id-ID');
+function upd(){let tot=0,c=0;document.querySelectorAll('.ticket').forEach(x=>{let ctr=x.querySelector('.ctr');if(ctr.style.display==='flex'){let q=+ctr.querySelector('.q').textContent;tot+=q*+x.dataset.p;c+=q;}});t.textContent=f(tot);document.querySelector('.next').disabled=!c;}
+document.querySelectorAll('.ticket').forEach(x=>{let s=x.querySelector('.select'),c=x.querySelector('.ctr'),q=c.querySelector('.q');
+s.onclick=()=>{s.style.display='none';c.style.display='flex';upd();}
+c.querySelector('.a').onclick=()=>{q.textContent=+q.textContent+1;upd();}
+c.querySelector('.m').onclick=()=>{let n=+q.textContent-1;if(n<1){q.textContent=1;c.style.display='none';s.style.display='inline-block';}else q.textContent=n;upd();}
+});
+
+const _oldUpd=upd;
+upd=function(){
+ _oldUpd();
+ let c=0,tot=0;
+ document.querySelectorAll('.ticket').forEach(x=>{
+  const ctr=x.querySelector('.ctr');
+  if(ctr.style.display==='flex'){
+    const q=+ctr.querySelector('.q').textContent;
+    c+=q; tot+=q*+x.dataset.p;
+  }
+ });
+ document.getElementById('stickyCount').textContent=c+' Tiket';
+ document.getElementById('stickyTotal').textContent=f(tot);
+}
+upd();
+
+</script>
+
+<div class="summarybar">
+<div><div>Total Tiket</div><div id="stickyCount">0</div></div>
+<div style="text-align:right"><div>Grand Total</div><div id="stickyTotal">Rp 0</div></div>
+</div>
+<div class="stickybar">
+<button class="stickybtn" onclick="window.location.href='form.html'">
+Lanjut ke Detail Pemesanan
+</button>
+</div>
+
+</body></html>
