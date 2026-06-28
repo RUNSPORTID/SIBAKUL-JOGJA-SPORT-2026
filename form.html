@@ -972,6 +972,12 @@ formatRupiah(totalHarga);
 
 document.getElementById("footerTotal").innerHTML=
 formatRupiah(totalHarga);
+
+document.getElementById("checkoutBtn").addEventListener("click",function(e){
+ e.preventDefault();
+ window.location.href="qr.html";
+});
+
 </script>
 
 </div>
